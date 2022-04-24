@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <head>
@@ -10,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <div class="conatiner">
         <!--Login screen-->
@@ -39,7 +41,7 @@
                 <!--input type="text" class="form__input" autofocus placeholder="Username" id="Username" /-->
                 <!--input type="password" class="form__input" autofocus placeholder="Password" id="Password" /-->
                 <!--input type="button" class="form__button" value="Login" onclick="javascript:validate()" /-->
-                <button onclick="javascript:validate()" class="form__button" type="submit">Login</button>
+                <button class="form__button" type="submit">Login</button>
             </div>
 
             <p class="form__text">
@@ -49,4 +51,180 @@
             </p>
         </form>
 
-</body># Web-App
+
+        <!--Register screen-->
+        <form class="form form--hidden" id="createAccount">
+            <h1 class="form__title">Create Account</h1>
+            <div class="form__message form__message--error"></div>
+            <div class="form__input-group">
+
+                <!-- <button class="img-button"> -->
+                    <input type="file" accept="image/*" name="image" id="myImg"
+                                onchange="saveProfilePicture(event)" style="display: none;">
+
+                            <label for="myImg" style="cursor: pointer; padding-left:2.5em"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viebox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                              </svg> 
+
+                              <label id="chooseText">Choose Profile Picture</label>
+                               
+                            
+                            </label>
+                            
+                            <img style="width: 70px;" id="imgOutput1"/>
+                <!-- </button> -->
+
+                <br><br>
+
+                <div class="form__input-group">
+                    <input type="text" id="signupUsername" class="form__input" autofocus placeholder="Username">
+                    <div class="form__input-error-message"></div>
+                </div>
+
+                <div class="form__input-group">
+                    <input type="password" id="Password_register" class="form__input" autofocus placeholder="Password">
+                    <div class="form__input-error-message"></div>
+                </div>
+
+                <div class="form__input-group">
+                    <input type="password" id="password_confirm" class="form__input" autofocus placeholder="Confirm password">
+                    <div class="form__input-error-message"></div>
+                </div>
+
+                <div class="form__input-group">
+                    <input type="text" id="Display_name" class="form__input" autofocus placeholder="Display name">
+                    <div class="form__input-error-message"></div>
+                </div>
+
+                <!--input type="text" class="form__input" autofocus placeholder="Username" id="username_register" /-->
+                <!--input type="password" class="form__input" autofocus placeholder="Password" id="Password_register" /-->
+                <!--input type="text" class="form__input" autofocus placeholder="Display name" id="Display_name" /-->
+
+                <!--input type="button" class="form__button" value="Register" onclick="javascript:register()" /-->
+                <button class="form__button" type="submit">Register</button>
+            </div>
+
+            <p class="form__text">
+                Already registered?
+                <br>
+                <a class="form__text" href="" id="linkLogin">Click here</a>
+            </p>
+        </form>
+
+        <form class="form form--hidden" id="chatScreen">
+            <h1 class="form__title">Chat Screen</h1>
+        </form>
+    </div>
+
+    <script>
+        // when the document is ready to run.
+        document.addEventListener("DOMContentLoaded", () => {
+            // create the screens.
+            const loginForm = document.querySelector("#login");
+            const createAccountForm = document.querySelector("#createAccount");
+
+            // while we are on login screen and pressing creat account.
+            document.querySelector("#linkCreateAccount").addEventListener("click", e => {
+                e.preventDefault();
+                loginForm.classList.add("form--hidden");
+                createAccountForm.classList.remove("form--hidden");
+            });
+
+            // while we are on creating account screen and pressing login.
+            document.querySelector("#linkLogin").addEventListener("click", e => {
+                e.preventDefault();
+                loginForm.classList.remove("form--hidden");
+                createAccountForm.classList.add("form--hidden");
+            });
+
+            // validation for login.
+            loginForm.addEventListener("submit", e => {
+                e.preventDefault();
+
+                var username = document.getElementById("Username").value;
+                var password = document.getElementById("Password").value;
+
+                // simple validation tests.
+                if (usersList.has(username) && usersList.get(username) == password) {
+                    user_display_name = displayNames.get(username);
+                    localStorage.setItem("user_display_name", user_display_name);
+                    setConnectedUser();
+                    connection();
+                } else {
+                    setFormMessage(loginForm, "error", "Invalid username/password combination");
+                }
+            });
+
+            // validation for creating account.
+            createAccountForm.addEventListener("submit", e => {
+                e.preventDefault();
+
+                var username = document.getElementById("signupUsername").value;
+                var password = document.getElementById("Password_register").value;
+                var password_confirm = document.getElementById("password_confirm").value;
+                var displayName = document.getElementById("Display_name").value;
+                localStorage.setItem("user_display_name", displayName);
+                // simple validation tests.
+
+                //change it to get one char and one number! 
+
+                var pattern = "^[0-9a-zA-Z]+$";
+
+                // this is validate only after register.
+                if (username.length > 0 && !usersList.has(username) && password.length == 8 && displayName.length > 0 && password.match(pattern) &&  password==password_confirm) {
+                    usersList.set(username, password);
+                    displayNames.set(username, displayName);
+                    setConnectedUser();
+                    connection();
+
+                } else if (usersList.has(username)) {
+                    setFormMessage(createAccountForm, "error", "user name already exist, please choose new user name");
+                } else if (!password.match(pattern)) {
+                    setFormMessage(createAccountForm, "error", "Password must conatains numbers and digits only!");
+                } else if (password != password_confirm){
+                    setFormMessage(createAccountForm, "error", "Passwords do not match");
+                } else {
+                    setFormMessage(createAccountForm, "error", "Invalid username/password combination");
+                }
+            });
+
+            // validation for the input box.
+            document.querySelectorAll(".form__input").forEach(inputElement => {
+                inputElement.addEventListener("blur", e => {
+                    var password = document.getElementById("Password_register").value;
+                    var password_confirm = document.getElementById("password_confirm").value;
+
+                    if (e.target.id === "Password_register" && e.target.value.length > 0 && e.target.value.length < 8) {
+                        setInputError(inputElement, "Password must be at least 8 characters in length");
+                    }
+
+                    if (e.target.id === "Username" && e.target.value.length > 0 && e.target.value.length < 8) {
+                        setInputError(inputElement, "Username must be at least 8 characters in length");
+                    }
+
+                    if (e.target.id === "Password" && e.target.value.length > 0 && e.target.value.length < 8) {
+                        setInputError(inputElement, "Password must be at least 8 characters in length");
+                    }
+
+                    if ((e.target.id === "Password" || e.target.id === "password_confirm") && (password != password_confirm)){
+                        setInputError(inputElement, "Passwords do not match");
+                    }
+
+                    if (e.target.id === "Display_name" && e.target.value.length == 0) {
+                        setInputError(inputElement, "Please choose your display name :)");
+                    }
+                });
+
+                // if the input is pass validation so remove the error line.
+                inputElement.addEventListener("input", e => {
+                    clearInputError(inputElement);
+                });
+            });
+        });
+    </script>
+    <script>window.onload = window.localStorage.clear();</script>
+    <!--include index.js file-->
+    <script src="index.js"></script>
+    <script src="app.js"></script>
+</body>
