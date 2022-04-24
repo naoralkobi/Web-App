@@ -1,3 +1,7 @@
+const usersList = new Map();
+const displayNames = new Map();
+const user_message = new Map();
+
 // show error message.
 function setFormMessage(formElement, type, message) {
     const messageElement = formElement.querySelector(".form__message");
@@ -17,4 +21,19 @@ function setInputError(inputElement, message) {
 function clearInputError(inputElement) {
     inputElement.classList.remove("form__input--error");
     inputElement.parentElement.querySelector(".form__input-error-message").textContent = "";
+}
+
+function saveProfilePicture(event){
+    var image = document.getElementById('imgOutput1');
+
+    image.src = URL.createObjectURL(event.target.files[0]);
+
+    localStorage.setItem("profile_pic", image.src);
+
+    document.getElementById("chooseText").innerText = "";
+}
+
+function setConnectedUser() { 
+    localStorage.setItem("connectedUser", true);
+
 }
