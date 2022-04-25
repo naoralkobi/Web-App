@@ -187,11 +187,170 @@
                             onclick="" /></div>
 
                     </div>
+
+
                     </div>
                 </div>
-                
             </div>
         </div>
+        <audio id="sendSound" src="messageSent.mp3"></audio>
+        <script>
+
+            // set up basic variables for app
+
+            const record = document.querySelector('.record');
+            const stop = document.querySelector('.stop');
+            const soundClips = document.querySelector('.sound-clips');
+            const mainSection = document.querySelector('.main-controls');
+
+            // hidden stop button while not recording
+
+            stop.hidden = true;
+
+
+            //main block for doing the audio recording
+
+            if (navigator.mediaDevices.getUserMedia) {
+
+                const constraints = { audio: true };
+                let chunks = [];
+
+                let onSuccess = function (stream) {
+                    const mediaRecorder = new MediaRecorder(stream);
+
+                    record.onclick = function () {
+                        mediaRecorder.start();
+                        record.style.background = "red";
+
+                        stop.hidden = false;
+                        record.hidden = true;
+                    }
+
+                    stop.onclick = function () {
+                        mediaRecorder.stop();
+                        record.style.background = "";
+                        record.style.color = "";
+                        // mediaRecorder.requestData();
+
+                        stop.hidden = true;
+                        record.hidden = false;
+                    }
+
+                    mediaRecorder.onstop = function (e) {
+
+                        const clipContainer = document.createElement('article');
+                        const clipLabel = document.createElement('p');
+                        const audio = document.createElement('audio');
+
+                        clipContainer.classList.add('clip');
+                        audio.setAttribute('controls', '');
+
+                        clipContainer.appendChild(audio);
+                        //soundClips.appendChild(clipContainer);
+
+
+                        var table = document.getElementById("myTableData");
+
+                        var rowCount = table.rows.length;
+                        var row = table.insertRow(rowCount);
+
+                        let name = document.getElementById("chat_name").innerHTML;
+
+                        // in case its a new chat:
+                        if (!user_message.has(name)) {
+                            user_message.set(name, []);
+                        }
+
+                        var today = new Date();
+                        var hours = today.getHours();
+                        var minutes = today.getMinutes();
+                        var ampm = hours >= 12 ? 'PM' : 'AM';
+                        hours = hours % 12;
+                        hours = hours ? hours : 12; // the hour '0' should be '12'
+                        minutes = minutes < 10 ? '0' + minutes : minutes;
+                        var currentTime = hours + ':' + minutes + ' ' + ampm;
+
+                        //user_message.get(name)[user_message.get(name).length] = clipContainer;
+
+                        
+                        user_message.get(name)[user_message.get(name).length] = new MessageData(clipContainer, currentTime);
+
+        
+                        row.insertCell(0).appendChild(clipContainer);
+
+                
+
+                        row.insertCell(1).innerHTML = "<small>" + currentTime + "</small>";
+
+                        row.cells[0].setAttribute("id","container"); 
+                        row.cells[1].setAttribute("class","bla"); 
+
+                        let contect = document.getElementById(name);
+                        contect.cells[1].innerHTML = name + "<br><small> Me: Audio </small>";
+                        contect.cells[2].innerHTML = row.cells[1].innerHTML +"<br><small style='color: grey;'>" +insertDate()+ "</small> ";
+                        contect.cells[2].style.color="grey";
+
+                        $("#" + name).prependTo('#contectTable');
+
+
+                        audio.controls = true;
+                        const blob = new Blob(chunks, { 'type': 'audio/ogg; codecs=opus' });
+                        chunks = [];
+                        const audioURL = window.URL.createObjectURL(blob);
+                        audio.src = audioURL;
+
+
+                        clipLabel.onclick = function () {
+                            const existingName = clipLabel.textContent;
+                            const newClipName = prompt('Enter a new name for your sound clip?');
+                            if (newClipName === null) {
+                                clipLabel.textContent = existingName;
+                            } else {
+                                clipLabel.textContent = newClipName;
+                            }
+                        }
+                    }
+
+                    mediaRecorder.ondataavailable = function (e) {
+                        chunks.push(e.data);
+                    }
+                }
+
+                let onError = function (err) {
+                }
+
+                navigator.mediaDevices.getUserMedia(constraints).then(onSuccess, onError);
+
+            } else {
+                console.log('getUserMedia not supported on your browser!');
+            }
+
+        </script>
+
+        <script>
+            $(document).ready(function () {
+                $('#message').keypress(function (e) {
+                    if (e.keyCode == 13)
+                        $('#send_button').click();
+                });
+            });
+        </script>
+
+        <script>
+            $(document).ready(function () {
+                $('#newContectModal').keypress(function (e) {
+                    if (e.keyCode == 13)
+                        $('#addContectButton').click();
+                });
+            });
+        </script>
+
+        <script>window.onload = window.localStorage.clear();</script>
+        <script>
+            let objDiv = document.getElementById("message-area");
+            objDiv.scrollTop = objDiv.scrollHeight;
+        </script>
+
         <script src="index.js"></script>
         <script src="app.js"></script>
     </div>
