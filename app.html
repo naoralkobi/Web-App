@@ -51,10 +51,69 @@
 
                     </div>
 
-                    <div class="row message-box p-3" id="message-box" hidden="hidden">
+                    <div class="row message-box p-3" id="message-box">
+
+                        <div class="chat-footer">
+                            <div class="col-1">
+                                <button type="submit" class="img-button">
+                                    <input type="file" accept="image/*" name="image" id="myImg" style="display: none;">
+
+                                    <label for="myImg" style="cursor: pointer;"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="20" height="20" fill="currentColor" class="bi bi-image"
+                                            viewbox="0 0 16 16">
+                                            <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                                            <path
+                                                d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z" />
+                                        </svg></label>
+                                </button>
+                            </div>
+                                
+
+                        <div class="col-1">
+                            <button type="submit" class="video-button">
+                                <input type="file" accept="video/*" name="myVideo" id="myVideo"
+                                    style="display: none;">
+
+                                    <label for="myVideo" style="cursor: pointer;"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                        fill="currentColor" class="bi bi-camera-reels" viewbox="0 0 16 16">
+                                        <path
+                                            d="M6 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM1 3a2 2 0 1 0 4 0 2 2 0 0 0-4 0z" />
+                                        <path
+                                            d="M9 6h.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 7.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 16H2a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7zm6 8.73V7.27l-3.5 1.555v4.35l3.5 1.556zM1 8v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1z" />
+                                        <path
+                                            d="M9 6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM7 3a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
+                                    </svg></label>
+
+                                </button>
+                        </div>
+
+                        <div class="col-1">
+                            <button class="record record-button"><svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                    height="20" fill="currentColor" class="bi bi-mic-fill" viewbox="0 0 16 16">
+                                    <path d="M5 3a3 3 0 0 1 6 0v5a3 3 0 0 1-6 0V3z" />
+                                    <path
+                                        d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z" />
+                                </svg></button>
+
+                                <button class="stop record-button"><svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                    height="20" fill="red" class="bi bi-record2" viewbox="0 0 16 16">
+                                    <path
+                                        d="M8 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0 1A5 5 0 1 0 8 3a5 5 0 0 0 0 10z" />
+                                    <path d="M10 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0z" />
+                                </svg></button>
+                         </div>
+                    
+                        <div class="col-6"><input id="message" type="text" class="form-control" autofocus
+                            onfocus="this.placeholder=''" placeholder="Type a message" /></div>
+    
+                        <div class="col-3"><input type="button" id="send_button" class="send__button" value="Send"
+                            onclick="" /></div>
 
                     </div>
+                    </div>
                 </div>
+                
             </div>
         </div>
     </div>
