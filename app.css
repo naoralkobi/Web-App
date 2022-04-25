@@ -102,10 +102,29 @@ body {
     padding-top: 16px;
     }
 
-    .record-button {
-        border-radius: 80%;
-        border-style: solid;
-        background-color: #919F89;
-        padding: 12px;
-        border-color: #517470;
-      }
+  .record-button {
+    border-radius: 80%;
+    border-style: solid;
+    background-color: #919F89;
+    padding: 12px;
+    border-color: #517470;
+  }
+
+
+input#send_button {
+  background-color: #919F89;
+  color: black;
+  padding: 12px;
+  font-size: 18px;
+  border-color: #517470;
+  width: 100%;
+}
+
+  .start-record-button {
+    outline: none;
+    border: none;
+  }
+
+  .start-record-button:hover {
+    background-color:rgba(235, 243, 243, 0.133);
+  }
