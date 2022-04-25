@@ -55,6 +55,26 @@
     <div>
         <div class="container front-container">
             <div class="row chat-top">
+
+                <div class="col-sm-4 border-right border-secondary">
+                    <img id="userProfilePic" src=" " alt="my picture" class="profile-image rounded-circle">
+                    <script>
+                        if(sessionStorage.getItem('profile_pic') == null){
+                            $("#userProfilePic").attr('src',"profil.png");
+                        }
+                        else{
+                        $("#userProfilePic").attr('src', sessionStorage.getItem('profile_pic'));
+                    }
+                    </script>
+
+                    <!-- need to add the name of user name.-->
+                    <span class="userName" id="userNameShow">
+                        <script>
+                            document.getElementById("userNameShow").innerHTML = sessionStorage.getItem("user_display_name");
+                        </script>
+                    </span>
+
+
                   <button class="add-button" id="add-button" data-toggle="modal" data-target="#newContectModal">
                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="white"
                             class="bi bi-person-plus-fill" viewbox="0 0 16 16">
@@ -63,6 +83,11 @@
                                 d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
                         </svg>
                     </button>  
+            </div>
+
+            <div id="contactProfile" class="col-sm-8">
+                <img id="contectProfilePicture" src="profil.png" alt="" class="profile-image rounded-circle">
+                <span class="ml-2" id="chat_name"></span>
             </div>
 
             <div class="row">
