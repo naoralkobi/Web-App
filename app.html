@@ -85,7 +85,7 @@
                     </button>  
             </div>
 
-            <div id="contactProfile" class="col-sm-8">
+            <div id="contactProfile" class="col-sm-8" hidden="hidden">
                 <img id="contectProfilePicture" src="profil.png" alt="" class="profile-image rounded-circle">
                 <span class="ml-2" id="chat_name"></span>
             </div>
@@ -184,7 +184,7 @@
                             onfocus="this.placeholder=''" placeholder="Type a message" /></div>
     
                         <div class="col-3"><input type="button" id="send_button" class="send__button" value="Send"
-                            onclick="" /></div>
+                            onclick="addTextMessage()" /></div>
 
                     </div>
 
