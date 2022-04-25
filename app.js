@@ -205,6 +205,35 @@ function addContect() {
     moveMessageTop(name);
 }
 
+function clearMessageBox(){
+    $("#myTableData tr").remove(); 
+}
+
+function loadMessages(){
+
+   //first clear the table from older messages 
+    clearMessageBox();
+
+    document.getElementById("message-box").removeAttribute("hidden");
+    document.getElementById("contactProfile").removeAttribute("hidden");
+    document.getElementById("opening").setAttribute("hidden","hidden");
+
+   // alert(event);
+    
+    // put the user profile picture on top of chat:
+    // $("#userProfilePic").attr('src', localStorage.getItem('profile_pic'));
+
+    //get the chat Name for restore his messages.
+    let chatUserName = document.getElementById("chat_name").innerHTML;
+
+    let size = user_message.get(chatUserName)?.length || 0;
+    //load the chat from the map.
+    for (let i = 0; i < size; i++) {
+        //alert("the " + i + " message is: " +user_message.get(chatUserName)[i].data);
+        addRowfromMap(user_message.get(chatUserName)[i]);
+
+    }
+}
 
 
 function logout(){
