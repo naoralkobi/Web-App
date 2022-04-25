@@ -98,6 +98,41 @@ function addImageMessage(image) {
     
 }
 
+
+function addVideoMessage(data) {
+    var video = document.createElement('video');
+
+    video.controls = true;
+    video.style.width = "200px";
+    video.style.height = "100px";
+
+
+    video.src = URL.createObjectURL(data[0]);
+
+    var table = document.getElementById("myTableData");
+    var currentTime = insertTimeMessage();
+
+    var rowCount = table.rows.length;
+    var row = table.insertRow(rowCount);
+
+
+    let name=document.getElementById("chat_name").innerHTML;
+
+    // in case its a new chat:
+    if (!user_message.has(name)) {
+       user_message.set(name,[]);
+    }
+
+    user_message.get(name)[user_message.get(name).length] = video;
+
+    row.insertCell(0).appendChild(video);
+    row.insertCell(1).innerHTML= "<small>"+insertTimeMessage()+"</small>";
+
+    insertColorsMessage(row);
+    
+    document.getElementById('myVideo').value='';
+}
+
 function insertColorsMessage(row){ 
     //color for the message: 
     row.cells[0].setAttribute("id","container"); 
