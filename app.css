@@ -68,3 +68,9 @@ body {
     width: 10%; 
     color:grey;
   }
+
+  #add-button{
+    right: 69%;
+    border: none;
+    background-color: #517470;
+}
