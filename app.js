@@ -18,6 +18,11 @@ function insertDate(){
     return date;
 }
 
+function moveMessageTop(name)
+{
+    $("#" + name).prependTo('#contectTable');
+}
+
 function addTextMessage() {
     var new_message = document.getElementById("message");
 
@@ -159,6 +164,47 @@ function addRowfromMap(new_message) {
     //color for the message:
     insertColorsMessage(row);
 }
+
+function addContect() {
+
+    var name = document.getElementById("firstName").value;
+    newContactName = name;
+
+    // in case its empty name
+    if (name.length == 0) {
+        return;
+    }
+
+    // in case this user exist - alert an error.
+    if (existContectList.includes(name)) {
+        alert(name + " Is Already In Your Chat List.");
+        return;
+    }
+
+    // Add the new name to the list.
+    existContectList[existContectList.length] = name;
+
+    var table = document.getElementById("contectTable");
+
+    var rowCount = table.rows.length;
+    var row = table.insertRow(rowCount);
+
+    var img = document.createElement('img');
+    img.src = 'profil.png';
+    img.width = 30;
+
+    row.insertCell(0).appendChild(img);
+    row.insertCell(1).innerHTML = name;
+    row.insertCell(2).innerHTML = "";
+
+    document.getElementById('firstName').value = "";
+
+    row.cells[0].setAttribute("class", "profile-image rounded-circle");
+    row.setAttribute("onclick", "setChatName(this);loadMessages()");
+    row.setAttribute("id", name);
+    moveMessageTop(name);
+}
+
 
 
 function logout(){
