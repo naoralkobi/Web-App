@@ -48,3 +48,18 @@ body {
 .message-box{
     background-color: #517470;
 }
+
+.chat-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 60px;
+    position: relative;
+    cursor: pointer;
+    }
+    
+.col-3{
+    right: 0%;
+    padding: 8px;
+}
+
