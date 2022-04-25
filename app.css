@@ -95,3 +95,17 @@ body {
     width: 0;
     height: 0;
   }
+
+    #userNameShow{
+    font-size: x-large;
+    padding: 8px;
+    padding-top: 16px;
+    }
+
+    .record-button {
+        border-radius: 80%;
+        border-style: solid;
+        background-color: #919F89;
+        padding: 12px;
+        border-color: #517470;
+      }
