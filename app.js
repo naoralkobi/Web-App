@@ -18,6 +18,48 @@ function insertDate(){
     return date;
 }
 
+function addTextMessage() {
+    var new_message = document.getElementById("message");
+
+    // in case its empty message
+    if(new_message.value.length == 0)
+    {
+        return;
+    }
+
+    var table = document.getElementById("myTableData");
+ 
+    var rowCount = table.rows.length;
+    var row = table.insertRow(rowCount);
+
+    var currentTime = insertTimeMessage();
+
+    row.insertCell(0).innerHTML= new_message.value;
+    row.insertCell(1).innerHTML= "<small>"+currentTime+"</small>";
+
+    document.getElementById("sendSound").play();
+
+    //add the new message to the bank.
+     let name=document.getElementById("chat_name").innerHTML;
+
+     // in case its a new chat:
+     if (!user_message.has(name)) {
+        user_message.set(name,[]);
+     }
+   
+     user_message.get(name)[user_message.get(name).length] = new MessageData(new_message.value,currentTime);
+
+    document.getElementById('message').value = "";
+
+    addTextMessageToContect(row,name);
+    insertColorsMessage(row);
+    moveMessageTop(name);
+
+    $("#message-area").scrollTop($("#message-area")[0].scrollHeight);
+
+    document.getElementById("myTableData").scrollIntoView();
+}
+
 function addImageMessage(image) {
 
     //var image = document.getElementById('imgOutput');
@@ -43,13 +85,15 @@ function addImageMessage(image) {
        user_message.set(name,[]);
     }
 
-    user_message.get(name)[user_message.get(name).length] = img;
+    user_message.get(name)[user_message.get(name).length] = new MessageData(img,currentTime);
 
 
     row.insertCell(0).appendChild(img);
     row.insertCell(1).innerHTML= "<small>"+currentTime+"</small>";
 
+    addImgMessageToContect(row,name);
     insertColorsMessage(row);
+    moveMessageTop(name);
     document.getElementById('myImg').value='';
     
 }
@@ -59,6 +103,28 @@ function insertColorsMessage(row){
     row.cells[0].setAttribute("id","container"); 
     row.cells[1].setAttribute("class","bla"); 
 }
+
+function addRowfromMap(new_message) {
+          
+    var table = document.getElementById("myTableData");
+ 
+    var rowCount = table.rows.length;
+    var row = table.insertRow(rowCount);
+
+    if(typeof(new_message.data) == "string") 
+    {
+        row.insertCell(0).innerHTML= new_message.data;
+    }
+    else 
+    {
+       row.insertCell(0).appendChild(new_message.data);
+    }
+    row.insertCell(1).innerHTML= "<small>"+new_message.messagetime+"</small>";
+
+    //color for the message:
+    insertColorsMessage(row);
+}
+
 
 function logout(){
     window.location.href="index.html";
