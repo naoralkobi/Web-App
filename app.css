@@ -74,3 +74,24 @@ body {
     border: none;
     background-color: #517470;
 }
+
+  .img-button {
+    border-radius: 80%;
+    background-color: #919F89;
+    padding: 12px;
+    border-color: #517470;
+    border-style: solid;
+  }
+
+  .video-button {
+    border-radius: 80%;
+    background-color: #919F89;
+    padding: 12px;
+    border-color: #517470;
+    border-style: solid;
+  }
+
+  .video-button > video{
+    width: 0;
+    height: 0;
+  }
