@@ -128,3 +128,13 @@ input#send_button {
   .start-record-button:hover {
     background-color:rgba(235, 243, 243, 0.133);
   }
+
+      .openScreen{
+        width: 830px;
+        padding-left: 300px;
+        padding-top: 150px;
+      }
+      
+      .openText{
+        padding-left: 160px;
+      }
