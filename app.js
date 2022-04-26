@@ -239,3 +239,88 @@ function loadMessages(){
 function logout(){
     window.location.href="index.html";
 }
+
+///function to connect to chat screen
+function connection(){
+    window.location.href="app.html";
+}
+
+  function AddStaticMessages(){
+
+    var img = document.createElement('img');
+    img.src = "sunset.jpg";
+
+    img.style.width = "100px";
+    img.style.height = "100px";
+
+    var video = document.createElement('video');
+
+    video.controls = true;
+    video.style.width = "200px";
+    video.style.height = "100px";
+
+
+    video.src = "video1.mp4";
+
+
+    const clipContainer = document.createElement('article');
+    const clipLabel = document.createElement('p');
+    const audio = document.createElement('audio');
+
+    clipContainer.classList.add('clip');
+    audio.setAttribute('controls', '');
+
+    clipContainer.appendChild(audio);
+
+    audio.controls = true;
+    audio.src = "sound1.mp3";
+
+    let name = "Omer Adam";
+    let currentTime = "12:00 PM";
+
+    if (!user_message.has(name)) {
+        user_message.set(name,[]);
+     }
+
+     name = "Bob";
+
+
+    if (!user_message.has(name)) {
+        user_message.set(name,[]);
+     }
+
+    name = "Spiderman";
+
+    var img2 = document.createElement('img');
+    img2.src = "venom.jpg";
+    audio.src= "guitar.mp3";
+
+    if (!user_message.has(name)) {
+        user_message.set(name,[]);
+     }
+
+
+
+    name = "Alice";
+
+    var img3 = document.createElement('img');
+    img3.src = "alice2.jpg";
+    audio.src= "guitar.mp3";
+
+    if (!user_message.has(name)) {
+        user_message.set(name,[]);
+     }
+
+
+
+    name = "Jack Sparrow";
+
+    var img3 = document.createElement('img');
+    img3.src = "snow.jpg";
+
+    if (!user_message.has(name)) {
+        user_message.set(name,[]);
+     }
+
+
+}
