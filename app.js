@@ -18,6 +18,49 @@ function insertDate(){
     return date;
 }
 
+function addTextMessageToContect(row,name){
+
+    let contect = document.getElementById(name);
+
+    if(row.cells[0].innerHTML.length > 10 )
+    {
+        contect.cells[1].innerHTML = name + "<br><small> Me: " + row.cells[0].innerHTML.substring(0, 9)+"...</small>";
+    }
+    else
+    {
+        contect.cells[1].innerHTML = name + "<br><small> Me: " + row.cells[0].innerHTML+ "</small>";
+    }
+    contect.cells[2].innerHTML = row.cells[1].innerHTML +"<br><small style='color: grey;'>" +insertDate()+ "</small> ";
+
+    contect.cells[2].style.color="grey";
+
+}
+
+function addAudioMessageToContect(row,name){
+
+    let contect = document.getElementById(name);
+    contect.cells[1].innerHTML = name + "<br><small> Me: Audio </small>";
+    contect.cells[2].innerHTML = row.cells[1].innerHTML +"<br><small style='color: grey;'>" +insertDate()+ "</small> ";
+    contect.cells[2].style.color="grey";
+}
+
+function addImgMessageToContect(row,name){
+
+    let contect = document.getElementById(name);
+    contect.cells[1].innerHTML = name + "<br><small> Me: Photo </small>";
+    contect.cells[2].innerHTML = row.cells[1].innerHTML +"<br><small style='color: grey;'>" +insertDate()+ "</small> ";
+    contect.cells[2].style.color="grey";
+}
+
+function addVideoMessageToContect(row,name){
+
+    let contect = document.getElementById(name);
+    contect.cells[1].innerHTML = name + "<br><small> Me: Video </small>";
+    contect.cells[2].innerHTML = row.cells[1].innerHTML +"<br><small style='color: grey;'>" +insertDate()+ "</small> ";
+    contect.cells[2].style.color="grey";
+}
+
+
 function moveMessageTop(name)
 {
     $("#" + name).prependTo('#contectTable');
@@ -245,7 +288,7 @@ function connection(){
     window.location.href="app.html";
 }
 
-  function AddStaticMessages(){
+function AddStaticMessages(){
 
     var img = document.createElement('img');
     img.src = "sunset.jpg";
@@ -281,6 +324,11 @@ function connection(){
     if (!user_message.has(name)) {
         user_message.set(name,[]);
      }
+    user_message.get(name)[0] = new MessageData("Hello Omer Adam",currentTime);
+    user_message.get(name)[1] = new MessageData(img,currentTime);
+    user_message.get(name)[2] = new MessageData(video,currentTime);
+    user_message.get(name)[3] = new MessageData(audio,currentTime);
+    user_message.get(name)[4] = new MessageData("What do you think?",currentTime);
 
      name = "Bob";
 
@@ -288,6 +336,10 @@ function connection(){
     if (!user_message.has(name)) {
         user_message.set(name,[]);
      }
+    user_message.get(name)[0] = new MessageData(img,currentTime);
+    user_message.get(name)[1] = new MessageData(audio,currentTime);
+    user_message.get(name)[2] = new MessageData("Hello Bob, how are you? i want to you to see my bunney!",currentTime);
+    user_message.get(name)[3] = new MessageData(video,currentTime);
 
     name = "Spiderman";
 
@@ -300,6 +352,10 @@ function connection(){
      }
 
 
+    user_message.get(name)[0] = new MessageData(img2,currentTime);
+    user_message.get(name)[1] = new MessageData("Here is your enemy Venom!!",currentTime);
+    user_message.get(name)[2] = new MessageData(video,currentTime);
+    user_message.get(name)[3] = new MessageData(audio,currentTime);
 
     name = "Alice";
 
@@ -312,6 +368,11 @@ function connection(){
      }
 
 
+    user_message.get(name)[0] = new MessageData(img3,currentTime);
+    user_message.get(name)[1] = new MessageData("i think you should change your picture to this one :)",currentTime);
+    user_message.get(name)[2] = new MessageData("and this is my bunny! cool!",currentTime);
+    user_message.get(name)[3] = new MessageData(video,currentTime);
+    user_message.get(name)[4] = new MessageData(audio,currentTime);
 
     name = "Jack Sparrow";
 
@@ -323,4 +384,12 @@ function connection(){
      }
 
 
-}
+    user_message.get(name)[0] = new MessageData(video,currentTime);
+    user_message.get(name)[1] = new MessageData(audio,currentTime);
+    user_message.get(name)[2] = new MessageData("Lets make a snowman!",currentTime);
+    user_message.get(name)[3] = new MessageData(img3,currentTime);
+   
+  }
+
+
+
