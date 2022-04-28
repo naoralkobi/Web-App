@@ -2,6 +2,21 @@ const usersList = new Map();
 const displayNames = new Map();
 const user_message = new Map();
 
+usersList.set("avivharel",12345678)
+displayNames.set("avivharel","avivi123");
+
+usersList.set("naoralkobi",12345678)
+displayNames.set("naoralkobi","naori");
+
+usersList.set("yossiMaatuk",12345678)
+displayNames.set("yossiMaatuk","yossik");
+
+usersList.set("superman",12345678)
+displayNames.set("superman","supermen");
+
+usersList.set("nanabanana",12345678)
+displayNames.set("nanabanana","nanabanana123");
+
 // show error message.
 function setFormMessage(formElement, type, message) {
     const messageElement = formElement.querySelector(".form__message");
@@ -36,4 +51,16 @@ function saveProfilePicture(event){
 function setConnectedUser() { 
     localStorage.setItem("connectedUser", true);
 
+}
+
+function validate()
+{
+    let name = document.getElementById("Username").value;
+    let password = document.getElementById("Password").value;
+    if(usersList.has(name) && usersList.get(name) == password)
+    {
+
+        localStorage.setItem("user_display_name", displayNames.get(name));
+        connection(name,password);
+    }
 }
