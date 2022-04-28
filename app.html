@@ -268,6 +268,7 @@
             </div>
         </div>
         <audio id="sendSound" src="messageSent.mp3"></audio>
+        <script>window.onload = window.localStorage.clear();</script>
         <script>
 
             // set up basic variables for app
@@ -335,12 +336,6 @@
                             user_message.set(name, []);
                         }
 
-                        user_message.get(name)[user_message.get(name).length] = clipContainer;
-
-
-
-                        row.insertCell(0).appendChild(clipContainer);
-
                         var today = new Date();
                         var hours = today.getHours();
                         var minutes = today.getMinutes();
@@ -348,12 +343,29 @@
                         hours = hours % 12;
                         hours = hours ? hours : 12; // the hour '0' should be '12'
                         minutes = minutes < 10 ? '0' + minutes : minutes;
-                        var strTime = hours + ':' + minutes + ' ' + ampm;
+                        var currentTime = hours + ':' + minutes + ' ' + ampm;
 
-                        row.insertCell(1).innerHTML = "<small>" + strTime + "</small>";
+                        //user_message.get(name)[user_message.get(name).length] = clipContainer;
 
-                        row.cells[0].setAttribute("class", "container");
-                        row.cells[1].setAttribute("class","bla");
+                        
+                        user_message.get(name)[user_message.get(name).length] = new MessageData(clipContainer, currentTime);
+
+        
+                        row.insertCell(0).appendChild(clipContainer);
+
+                
+
+                        row.insertCell(1).innerHTML = "<small>" + currentTime + "</small>";
+
+                        row.cells[0].setAttribute("id","container"); 
+                        row.cells[1].setAttribute("class","bla"); 
+
+                        let contect = document.getElementById(name);
+                        contect.cells[1].innerHTML = name + "<br><small> Me: Audio </small>";
+                        contect.cells[2].innerHTML = row.cells[1].innerHTML +"<br><small style='color: grey;'>" +insertDate()+ "</small> ";
+                        contect.cells[2].style.color="grey";
+
+                        $("#" + name).prependTo('#contectTable');
 
 
                         audio.controls = true;
@@ -408,7 +420,6 @@
             });
         </script>
 
-        <script>window.onload = window.localStorage.clear();</script>
         <script src="index.js"></script>
         <script src="app.js"></script>
     </div>
