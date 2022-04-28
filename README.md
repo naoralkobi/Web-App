@@ -6,7 +6,7 @@ This is a new communication app!
 join us.
 
 
-we have 5 users in our app.
+we have 5 existing users in our app.
 
 user name: "avivharel"
 password: "12345678"
@@ -27,6 +27,13 @@ displayName: "supermen"
 user name: "nanabanana"
 password: "12345678"
 displayName: "nanabanana123"
+
+if you want to login - you can use the user name and password.
+you can also register to our app.
+
+clone our project, and make sure all the filles are in the same directory.
+
+enjoy!
 
 
 
