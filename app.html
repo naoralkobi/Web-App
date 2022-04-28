@@ -12,21 +12,20 @@
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
 
-    <!-- <script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
-
-
     <!--include index.css file-->
     <link rel="stylesheet" type="text/css" href="app.css">
     <script src="https://markjivko.com/dist/recorder.js"></script>
 </head>
 
 <body>
+    <script>
+        var permission = localStorage.getItem('connectedUser');
 
-        <!-- add new contect Modal -->
+        if (permission == "false") {
+            window.location.href="index.html";
+        }
+    </script>
+    <!-- add new contect Modal -->
     <div class="modal fade" id="newContectModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -52,6 +51,8 @@
             </div>
         </div>
     </div>
+
+
     <div>
         <div class="container front-container">
             <div class="row chat-top">
@@ -59,35 +60,40 @@
                 <div class="col-sm-4 border-right border-secondary">
                     <img id="userProfilePic" src=" " alt="my picture" class="profile-image rounded-circle">
                     <script>
-                        if(sessionStorage.getItem('profile_pic') == null){
-                            $("#userProfilePic").attr('src',"profil.png");
-                        }
-                        else{
-                        $("#userProfilePic").attr('src', sessionStorage.getItem('profile_pic'));
-                    }
+                        $("#userProfilePic").attr('src', localStorage.getItem('profile_pic'));
                     </script>
 
                     <!-- need to add the name of user name.-->
                     <span class="userName" id="userNameShow">
                         <script>
-                            document.getElementById("userNameShow").innerHTML = sessionStorage.getItem("user_display_name");
+                            if(sessionStorage.getItem('profile_pic') == null){
+                                $("#userProfilePic").attr('src',"profil.png");
+                            }
+                            else{
+                            $("#userProfilePic").attr('src', localStorage.getItem('profile_pic'));
+                        }
                         </script>
                     </span>
 
+                    
 
-                  <button class="add-button" id="add-button" data-toggle="modal" data-target="#newContectModal">
+                    <button class="add-button" id="add-button" data-toggle="modal" data-target="#newContectModal">
                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="white"
                             class="bi bi-person-plus-fill" viewbox="0 0 16 16">
                             <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                             <path fill-rule="evenodd"
                                 d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
                         </svg>
-                    </button>  
-            </div>
+                    </button>
+                </div>
 
-            <div id="contactProfile" class="col-sm-8" hidden="hidden">
-                <img id="contectProfilePicture" src="profil.png" alt="" class="profile-image rounded-circle">
-                <span class="ml-2" id="chat_name"></span>
+                
+
+                <div id="contactProfile" class="col-sm-8" hidden="hidden">
+                    <img id="contectProfilePicture" src="profil.png" alt="" class="profile-image rounded-circle">
+                    <span class="ml-2" id="chat_name"></span>
+                </div>
+
             </div>
 
             <div class="row">
@@ -96,7 +102,6 @@
                     <div class="contact-table-scroll">
                         <table class="table table-hover" id="contectTable">
                             <tbody>
-                                <tbody>
                                 <tr id="Omer Adam">
                                     <td><img src="OmerAdam.jpg" alt="" class="profile-image rounded-circle"></td>
                                     <td onclick="setChatName('Omer Adam');AddStaticMessages();loadMessages()">Omer Adam <br> <small>Me: What do you think?</small></td>
@@ -125,8 +130,6 @@
                                     <td><small style="color: grey;">12:00 PM</small><br><small style="color: grey;">24.4.2022</small></td>
                                 </tr>
                             </tbody>
-                                
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -152,15 +155,15 @@
 
 
                         <table class="table" id="myTableData">
-                            <tbody>
+                            <tbody id="message-body">
+
                             </tbody>
                         </table>
 
                     </div>
 
 
-
-                    <div class="row message-box p-3" id="message-box">
+                    <div class="row message-box p-3" id="message-box" hidden="hidden">
 
                         <div class="chat-footer">
                             <div class="col-1">
@@ -174,7 +177,7 @@
                                             <path
                                                 d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z" />
                                         </svg></label>
-                                    
+
                                     <script>
                                         const imgInput = document.getElementById('myImg');
 
@@ -182,12 +185,10 @@
                                             addImageMessage(e.target.files),
                                         );
                                     </script>
-                                                                            
                                 </button>
                             </div>
-                                
 
-                        <div class="col-1">
+                            <div class="col-1">
                                 <button type="submit" class="video-button">
                                     <input type="file" accept="video/*" name="myVideo" id="myVideo"
                                         style="display: none;">
@@ -216,29 +217,31 @@
                                 </button>
                             </div>
 
-                        <div class="col-1">
-                            <button class="record record-button"><svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                    height="20" fill="currentColor" class="bi bi-mic-fill" viewbox="0 0 16 16">
-                                    <path d="M5 3a3 3 0 0 1 6 0v5a3 3 0 0 1-6 0V3z" />
-                                    <path
-                                        d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z" />
-                                </svg></button>
-
+                            <div class="col-1">
+                                <button class="record record-button"><svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                        height="20" fill="currentColor" class="bi bi-mic-fill" viewbox="0 0 16 16">
+                                        <path d="M5 3a3 3 0 0 1 6 0v5a3 3 0 0 1-6 0V3z" />
+                                        <path
+                                            d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z" />
+                                    </svg></button>
                                 <button class="stop record-button"><svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                    height="20" fill="red" class="bi bi-record2" viewbox="0 0 16 16">
-                                    <path
-                                        d="M8 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0 1A5 5 0 1 0 8 3a5 5 0 0 0 0 10z" />
-                                    <path d="M10 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0z" />
-                                </svg></button>
-                         </div>
-                    
-                        <div class="col-6"><input id="message" type="text" class="form-control" autofocus
-                            onfocus="this.placeholder=''" placeholder="Type a message" /></div>
-    
-                        <div class="col-3"><input type="button" id="send_button" class="send__button" value="Send"
-                            onclick="addTextMessage()" /></div>
+                                        height="20" fill="red" class="bi bi-record2" viewbox="0 0 16 16">
+                                        <path
+                                            d="M8 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0 1A5 5 0 1 0 8 3a5 5 0 0 0 0 10z" />
+                                        <path d="M10 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0z" />
+                                    </svg></button>
+                            </div>
+                            <section class="sound-clips">
 
-                    </div>
+
+                            </section>
+
+                            <div class="col-6"><input id="message" type="text" class="form-control" autofocus
+                                    onfocus="this.placeholder=''" placeholder="Type a message" /></div>
+
+                            <div class="col-3"><input type="button" id="send_button" class="send__button" value="Send"
+                                    onclick="addTextMessage()" /></div>
+                        </div>
 
 
                     </div>
