@@ -10,8 +10,7 @@ body {
     color: #ffffff;
 }
 
-.container,
-.form__input {
+.container {
     width: 400px;
     max-width: 400px;
     margin: 1rem;
@@ -36,6 +35,11 @@ h3 {
 
 a {
     color: #ffffff;
+}
+
+.container,
+.form__input {
+    font: 500 1rem 'Quicksand', sans-serif;
 }
 
 .form--hidden {
