@@ -1,6 +1,7 @@
 let messageBank = [];
 let existContectList = [];
 localStorage.setItem("connectedUser", false);
+let staticFlag = 1;
 
 
 //static data - as requierd:
@@ -16,8 +17,11 @@ class MessageData {
   }
 
 
-  function AddStaticMessages(){
 
+
+
+  function AddStaticMessages(){
+if(staticFlag == 1){
     var img = document.createElement('img');
     img.src = "sunset.jpg";
 
@@ -116,7 +120,8 @@ class MessageData {
     user_message.get(name)[1] = new MessageData(audio,currentTime);
     user_message.get(name)[2] = new MessageData("Lets make a snowman!",currentTime);
     user_message.get(name)[3] = new MessageData(img3,currentTime);
-}
+    }
+  }
 
 function addTextMessageToContect(row,name){
 
@@ -162,7 +167,6 @@ function addVideoMessageToContect(row,name){
 
 function moveMessageTop(name)
 {
-   // alert("#" + name);
     $("#" + name).prependTo('#contectTable');
 }
 
@@ -282,6 +286,10 @@ function addVideoMessage(data) {
     document.getElementById('myVideo').value='';
 }
 
+function addAudioMessage(){
+
+    
+}
 
 function insertTimeMessage(){
     var today = new Date();
@@ -370,7 +378,6 @@ function addContect() {
     row.cells[0].setAttribute("class", "profile-image rounded-circle");
     row.setAttribute("onclick", "setChatName(this);loadMessages()");
     row.setAttribute("id", name);
-
     moveMessageTop(name);
 }
 
@@ -454,3 +461,34 @@ function setChatName(data)
     }
 
 }
+
+function clearStaticBox(){
+    $("#contectTable tr").remove(); 
+}
+
+// function text_massage() { 
+ 
+//     var table = document.getElementById("myTableData"); 
+  
+//     var rowCount = table.rows.length; 
+//     var row = table.insertRow(rowCount); 
+ 
+//     var currentTime = insertTimeMessage(); 
+ 
+//     row.insertCell(0).innerHTML= "hello how are you?"; 
+//     row.insertCell(1).innerHTML= "<small>"+currentTime+"</small>"; 
+ 
+//     //add the new message to the bank. 
+//     let name=document.getElementById("Omer Adam").innerHTML; 
+    
+//     user_message.get(name)[user_message.get(name).length] = new MessageData("hello how are you?",currentTime); 
+ 
+//     document.getElementById('message').value = ""; 
+ 
+//     insertColorsMessage(row); 
+// }
+
+function logout(){
+    window.location.href="index.html";
+}
+
