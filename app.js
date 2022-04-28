@@ -16,10 +16,6 @@ class MessageData {
     }
   }
 
-
-
-
-
   function AddStaticMessages(){
 if(staticFlag == 1){
     var img = document.createElement('img');
@@ -466,27 +462,6 @@ function clearStaticBox(){
     $("#contectTable tr").remove(); 
 }
 
-// function text_massage() { 
- 
-//     var table = document.getElementById("myTableData"); 
-  
-//     var rowCount = table.rows.length; 
-//     var row = table.insertRow(rowCount); 
- 
-//     var currentTime = insertTimeMessage(); 
- 
-//     row.insertCell(0).innerHTML= "hello how are you?"; 
-//     row.insertCell(1).innerHTML= "<small>"+currentTime+"</small>"; 
- 
-//     //add the new message to the bank. 
-//     let name=document.getElementById("Omer Adam").innerHTML; 
-    
-//     user_message.get(name)[user_message.get(name).length] = new MessageData("hello how are you?",currentTime); 
- 
-//     document.getElementById('message').value = ""; 
- 
-//     insertColorsMessage(row); 
-// }
 
 function logout(){
     window.location.href="index.html";
