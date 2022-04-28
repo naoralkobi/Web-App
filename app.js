@@ -1,294 +1,25 @@
-function insertTimeMessage(){
-    var today = new Date();
-    var hours = today.getHours();
-    var minutes = today.getMinutes();
-    var ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0'+minutes : minutes;
-    var strTime = hours + ':' + minutes + ' ' + ampm;
+let messageBank = [];
+let existContectList = [];
+sessionStorage.setItem("connectedUser", false);
 
 
-    return strTime;
-}
+//static data - as requierd:
+let StaticContectList = ["Omer Adam", "Spiderman","Jack Sparrow","Alice","Bob"];
 
-function insertDate(){
-    var today = new Date();
-    var date = " "+today.getDate() +"." +(today.getMonth()+1)+'.'+today.getFullYear();
-    return date;
-}
 
-function addTextMessageToContect(row,name){
 
-    let contect = document.getElementById(name);
-
-    if(row.cells[0].innerHTML.length > 10 )
-    {
-        contect.cells[1].innerHTML = name + "<br><small> Me: " + row.cells[0].innerHTML.substring(0, 9)+"...</small>";
+class MessageData {
+    constructor(data, messagetime) {
+      this.data = data;
+      this.messagetime = messagetime;
     }
-    else
-    {
-        contect.cells[1].innerHTML = name + "<br><small> Me: " + row.cells[0].innerHTML+ "</small>";
-    }
-    contect.cells[2].innerHTML = row.cells[1].innerHTML +"<br><small style='color: grey;'>" +insertDate()+ "</small> ";
+  }
 
-    contect.cells[2].style.color="grey";
 
-}
 
-function addAudioMessageToContect(row,name){
 
-    let contect = document.getElementById(name);
-    contect.cells[1].innerHTML = name + "<br><small> Me: Audio </small>";
-    contect.cells[2].innerHTML = row.cells[1].innerHTML +"<br><small style='color: grey;'>" +insertDate()+ "</small> ";
-    contect.cells[2].style.color="grey";
-}
 
-function addImgMessageToContect(row,name){
-
-    let contect = document.getElementById(name);
-    contect.cells[1].innerHTML = name + "<br><small> Me: Photo </small>";
-    contect.cells[2].innerHTML = row.cells[1].innerHTML +"<br><small style='color: grey;'>" +insertDate()+ "</small> ";
-    contect.cells[2].style.color="grey";
-}
-
-function addVideoMessageToContect(row,name){
-
-    let contect = document.getElementById(name);
-    contect.cells[1].innerHTML = name + "<br><small> Me: Video </small>";
-    contect.cells[2].innerHTML = row.cells[1].innerHTML +"<br><small style='color: grey;'>" +insertDate()+ "</small> ";
-    contect.cells[2].style.color="grey";
-}
-
-
-function moveMessageTop(name)
-{
-    $("#" + name).prependTo('#contectTable');
-}
-
-function addTextMessage() {
-    var new_message = document.getElementById("message");
-
-    // in case its empty message
-    if(new_message.value.length == 0)
-    {
-        return;
-    }
-
-    var table = document.getElementById("myTableData");
- 
-    var rowCount = table.rows.length;
-    var row = table.insertRow(rowCount);
-
-    var currentTime = insertTimeMessage();
-
-    row.insertCell(0).innerHTML= new_message.value;
-    row.insertCell(1).innerHTML= "<small>"+currentTime+"</small>";
-
-    document.getElementById("sendSound").play();
-
-    //add the new message to the bank.
-     let name=document.getElementById("chat_name").innerHTML;
-
-     // in case its a new chat:
-     if (!user_message.has(name)) {
-        user_message.set(name,[]);
-     }
-   
-     user_message.get(name)[user_message.get(name).length] = new MessageData(new_message.value,currentTime);
-
-    document.getElementById('message').value = "";
-
-    addTextMessageToContect(row,name);
-    insertColorsMessage(row);
-    moveMessageTop(name);
-
-    $("#message-area").scrollTop($("#message-area")[0].scrollHeight);
-
-    document.getElementById("myTableData").scrollIntoView();
-}
-
-function addImageMessage(image) {
-
-    //var image = document.getElementById('imgOutput');
-    var img = document.createElement('img');
-    img.src = URL.createObjectURL(image[0]);
-
-    img.style.width = "100px";
-    img.style.height = "100px";
-
-    //image.src = URL.createObjectURL(image[0]);
-
-    var table = document.getElementById("myTableData");
-
-    var currentTime = insertTimeMessage();
-
-    var rowCount = table.rows.length;
-    var row = table.insertRow(rowCount);
-
-    let name=document.getElementById("chat_name").innerHTML;
-
-    // in case its a new chat:
-    if (!user_message.has(name)) {
-       user_message.set(name,[]);
-    }
-
-    user_message.get(name)[user_message.get(name).length] = new MessageData(img,currentTime);
-
-
-    row.insertCell(0).appendChild(img);
-    row.insertCell(1).innerHTML= "<small>"+currentTime+"</small>";
-
-    addImgMessageToContect(row,name);
-    insertColorsMessage(row);
-    moveMessageTop(name);
-    document.getElementById('myImg').value='';
-    
-}
-
-
-function addVideoMessage(data) {
-    var video = document.createElement('video');
-
-    video.controls = true;
-    video.style.width = "200px";
-    video.style.height = "100px";
-
-
-    video.src = URL.createObjectURL(data[0]);
-
-    var table = document.getElementById("myTableData");
-    var currentTime = insertTimeMessage();
-
-    var rowCount = table.rows.length;
-    var row = table.insertRow(rowCount);
-
-
-    let name=document.getElementById("chat_name").innerHTML;
-
-    // in case its a new chat:
-    if (!user_message.has(name)) {
-       user_message.set(name,[]);
-    }
-
-    user_message.get(name)[user_message.get(name).length] = video;
-
-    row.insertCell(0).appendChild(video);
-    row.insertCell(1).innerHTML= "<small>"+insertTimeMessage()+"</small>";
-
-    insertColorsMessage(row);
-    
-    document.getElementById('myVideo').value='';
-}
-
-function insertColorsMessage(row){ 
-    //color for the message: 
-    row.cells[0].setAttribute("id","container"); 
-    row.cells[1].setAttribute("class","bla"); 
-}
-
-function addRowfromMap(new_message) {
-          
-    var table = document.getElementById("myTableData");
- 
-    var rowCount = table.rows.length;
-    var row = table.insertRow(rowCount);
-
-    if(typeof(new_message.data) == "string") 
-    {
-        row.insertCell(0).innerHTML= new_message.data;
-    }
-    else 
-    {
-       row.insertCell(0).appendChild(new_message.data);
-    }
-    row.insertCell(1).innerHTML= "<small>"+new_message.messagetime+"</small>";
-
-    //color for the message:
-    insertColorsMessage(row);
-}
-
-function addContect() {
-
-    var name = document.getElementById("firstName").value;
-    newContactName = name;
-
-    // in case its empty name
-    if (name.length == 0) {
-        return;
-    }
-
-    // in case this user exist - alert an error.
-    if (existContectList.includes(name)) {
-        alert(name + " Is Already In Your Chat List.");
-        return;
-    }
-
-    // Add the new name to the list.
-    existContectList[existContectList.length] = name;
-
-    var table = document.getElementById("contectTable");
-
-    var rowCount = table.rows.length;
-    var row = table.insertRow(rowCount);
-
-    var img = document.createElement('img');
-    img.src = 'profil.png';
-    img.width = 30;
-
-    row.insertCell(0).appendChild(img);
-    row.insertCell(1).innerHTML = name;
-    row.insertCell(2).innerHTML = "";
-
-    document.getElementById('firstName').value = "";
-
-    row.cells[0].setAttribute("class", "profile-image rounded-circle");
-    row.setAttribute("onclick", "setChatName(this);loadMessages()");
-    row.setAttribute("id", name);
-    moveMessageTop(name);
-}
-
-function clearMessageBox(){
-    $("#myTableData tr").remove(); 
-}
-
-function loadMessages(){
-
-   //first clear the table from older messages 
-    clearMessageBox();
-
-    document.getElementById("message-box").removeAttribute("hidden");
-    document.getElementById("contactProfile").removeAttribute("hidden");
-    document.getElementById("opening").setAttribute("hidden","hidden");
-
-   // alert(event);
-    
-    // put the user profile picture on top of chat:
-    // $("#userProfilePic").attr('src', localStorage.getItem('profile_pic'));
-
-    //get the chat Name for restore his messages.
-    let chatUserName = document.getElementById("chat_name").innerHTML;
-
-    let size = user_message.get(chatUserName)?.length || 0;
-    //load the chat from the map.
-    for (let i = 0; i < size; i++) {
-        //alert("the " + i + " message is: " +user_message.get(chatUserName)[i].data);
-        addRowfromMap(user_message.get(chatUserName)[i]);
-
-    }
-}
-
-
-function logout(){
-    window.location.href="index.html";
-}
-
-///function to connect to chat screen
-function connection(){
-    window.location.href="app.html";
-}
-
-function AddStaticMessages(){
+  function AddStaticMessages(){
 
     var img = document.createElement('img');
     img.src = "sunset.jpg";
@@ -391,5 +122,371 @@ function AddStaticMessages(){
    
   }
 
+function addTextMessageToContect(row,name){
 
+    let contect = document.getElementById(name);
+
+    if(row.cells[0].innerHTML.length > 10 )
+    {
+        contect.cells[1].innerHTML = name + "<br><small> Me: " + row.cells[0].innerHTML.substring(0, 9)+"...</small>";
+    }
+    else
+    {
+        contect.cells[1].innerHTML = name + "<br><small> Me: " + row.cells[0].innerHTML+ "</small>";
+    }
+    contect.cells[2].innerHTML = row.cells[1].innerHTML +"<br><small style='color: grey;'>" +insertDate()+ "</small> ";
+
+    contect.cells[2].style.color="grey";
+
+}
+
+function addAudioMessageToContect(row,name){
+
+    let contect = document.getElementById(name);
+    contect.cells[1].innerHTML = name + "<br><small> Me: Audio </small>";
+    contect.cells[2].innerHTML = row.cells[1].innerHTML +"<br><small style='color: grey;'>" +insertDate()+ "</small> ";
+    contect.cells[2].style.color="grey";
+}
+
+function addImgMessageToContect(row,name){
+
+    let contect = document.getElementById(name);
+    contect.cells[1].innerHTML = name + "<br><small> Me: Photo </small>";
+    contect.cells[2].innerHTML = row.cells[1].innerHTML +"<br><small style='color: grey;'>" +insertDate()+ "</small> ";
+    contect.cells[2].style.color="grey";
+}
+
+function addVideoMessageToContect(row,name){
+
+    let contect = document.getElementById(name);
+    contect.cells[1].innerHTML = name + "<br><small> Me: Video </small>";
+    contect.cells[2].innerHTML = row.cells[1].innerHTML +"<br><small style='color: grey;'>" +insertDate()+ "</small> ";
+    contect.cells[2].style.color="grey";
+}
+
+function moveMessageTop(name)
+{
+   // alert("#" + name);
+    $("#" + name).prependTo('#contectTable');
+}
+
+function addTextMessage() {
+    var new_message = document.getElementById("message");
+
+    // in case its empty message
+    if(new_message.value.length == 0)
+    {
+        return;
+    }
+
+    var table = document.getElementById("myTableData");
+ 
+    var rowCount = table.rows.length;
+    var row = table.insertRow(rowCount);
+
+    var currentTime = insertTimeMessage();
+
+    row.insertCell(0).innerHTML= new_message.value;
+    row.insertCell(1).innerHTML= "<small>"+currentTime+"</small>";
+
+    document.getElementById("sendSound").play();
+
+    //add the new message to the bank.
+     let name=document.getElementById("chat_name").innerHTML;
+
+     // in case its a new chat:
+     if (!user_message.has(name)) {
+        user_message.set(name,[]);
+     }
+   
+     user_message.get(name)[user_message.get(name).length] = new MessageData(new_message.value,currentTime);
+
+    document.getElementById('message').value = "";
+
+    addTextMessageToContect(row,name);
+    insertColorsMessage(row);
+    moveMessageTop(name);
+
+    $("#message-area").scrollTop($("#message-area")[0].scrollHeight);
+
+    document.getElementById("myTableData").scrollIntoView();
+}
+
+function addImageMessage(image) {
+
+    //var image = document.getElementById('imgOutput');
+    var img = document.createElement('img');
+    img.src = URL.createObjectURL(image[0]);
+
+    img.style.width = "100px";
+    img.style.height = "100px";
+
+    //image.src = URL.createObjectURL(image[0]);
+
+    var table = document.getElementById("myTableData");
+
+    var currentTime = insertTimeMessage();
+
+    var rowCount = table.rows.length;
+    var row = table.insertRow(rowCount);
+
+    let name=document.getElementById("chat_name").innerHTML;
+
+    // in case its a new chat:
+    if (!user_message.has(name)) {
+       user_message.set(name,[]);
+    }
+
+    user_message.get(name)[user_message.get(name).length] = new MessageData(img,currentTime);
+
+
+    row.insertCell(0).appendChild(img);
+    row.insertCell(1).innerHTML= "<small>"+currentTime+"</small>";
+
+    addImgMessageToContect(row,name);
+    insertColorsMessage(row);
+    moveMessageTop(name);
+    document.getElementById('myImg').value='';
+    
+}
+
+function addVideoMessage(data) {
+    var video = document.createElement('video');
+
+    video.controls = true;
+    video.style.width = "200px";
+    video.style.height = "100px";
+
+
+    video.src = URL.createObjectURL(data[0]);
+
+    var table = document.getElementById("myTableData");
+    var currentTime = insertTimeMessage();
+
+    var rowCount = table.rows.length;
+    var row = table.insertRow(rowCount);
+
+
+    let name=document.getElementById("chat_name").innerHTML;
+
+    // in case its a new chat:
+    if (!user_message.has(name)) {
+       user_message.set(name,[]);
+    }
+
+    user_message.get(name)[user_message.get(name).length] = new MessageData(video,currentTime);
+
+    row.insertCell(0).appendChild(video);
+    row.insertCell(1).innerHTML= "<small>"+insertTimeMessage()+"</small>";
+
+    addVideoMessageToContect(row,name);
+    insertColorsMessage(row);
+    moveMessageTop(name);
+    
+    document.getElementById('myVideo').value='';
+}
+
+function addAudioMessage(){
+
+    
+}
+
+function insertTimeMessage(){
+    var today = new Date();
+    var hours = today.getHours();
+    var minutes = today.getMinutes();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+
+
+    return strTime;
+}
+
+function insertDate(){
+    var today = new Date();
+    var date = " "+today.getDate() +"." +(today.getMonth()+1)+'.'+today.getFullYear();
+    return date;
+}
+
+function insertColorsMessage(row){ 
+    //color for the message: 
+    //row.cells[0].setAttribute("class","bg-primary p-2 mt-2 mr-5 shadow-sm text-white float-left rounded"); 
+    row.cells[0].setAttribute("id","container"); 
+    row.cells[1].setAttribute("class","bla"); 
+}
+
+function addRowfromMap(new_message) {
+          
+    var table = document.getElementById("myTableData");
+ 
+    var rowCount = table.rows.length;
+    var row = table.insertRow(rowCount);
+
+    if(typeof(new_message.data) == "string") 
+    {
+        row.insertCell(0).innerHTML= new_message.data;
+    }
+    else 
+    {
+       row.insertCell(0).appendChild(new_message.data);
+    }
+    row.insertCell(1).innerHTML= "<small>"+new_message.messagetime+"</small>";
+
+    //color for the message:
+    insertColorsMessage(row);
+}
+
+
+
+function addContect() {
+
+    var name = document.getElementById("firstName").value;
+    newContactName = name;
+
+    // in case its empty name
+    if (name.length == 0) {
+        return;
+    }
+
+    // in case this user exist - alert an error.
+    if (existContectList.includes(name)) {
+        alert(name + " Is Already In Your Chat List.");
+        return;
+    }
+
+    // Add the new name to the list.
+    existContectList[existContectList.length] = name;
+
+    var table = document.getElementById("contectTable");
+
+    var rowCount = table.rows.length;
+    var row = table.insertRow(rowCount);
+
+    var img = document.createElement('img');
+    img.src = 'profil.png';
+    img.width = 30;
+
+    row.insertCell(0).appendChild(img);
+    row.insertCell(1).innerHTML = name;
+    row.insertCell(2).innerHTML = "";
+
+    document.getElementById('firstName').value = "";
+
+    row.cells[0].setAttribute("class", "profile-image rounded-circle");
+    row.setAttribute("onclick", "setChatName(this);loadMessages()");
+    row.setAttribute("id", name);
+    moveMessageTop(name);
+}
+
+
+function clearMessageBox(){
+    $("#myTableData tr").remove(); 
+}
+
+function loadMessages(){
+
+   //first clear the table from older messages 
+    clearMessageBox();
+
+    document.getElementById("message-box").removeAttribute("hidden");
+    document.getElementById("contactProfile").removeAttribute("hidden");
+    document.getElementById("opening").setAttribute("hidden","hidden");
+
+   // alert(event);
+    
+    // put the user profile picture on top of chat:
+    // $("#userProfilePic").attr('src', localStorage.getItem('profile_pic'));
+
+    //get the chat Name for restore his messages.
+    let chatUserName = document.getElementById("chat_name").innerHTML;
+
+    let size = user_message.get(chatUserName)?.length || 0;
+    //load the chat from the map.
+    for (let i = 0; i < size; i++) {
+        //alert("the " + i + " message is: " +user_message.get(chatUserName)[i].data);
+        addRowfromMap(user_message.get(chatUserName)[i]);
+
+    }
+}
+
+///function to connect to chat screen
+function connection(){
+    window.location.href="app.html";
+}
+
+
+function setChatName(data)
+{
+    // in case its one of the static members.
+    if(StaticContectList.includes(data))
+    {
+        document.getElementById("chat_name").textContent= data;
+
+     //just for now - static way!!
+        if(data == "Omer Adam")
+        {
+             document.getElementById("contectProfilePicture").setAttribute("src","OmerAdam.jpg"); 
+         }
+         if(data == "Jack Sparrow")
+         {
+              document.getElementById("contectProfilePicture").setAttribute("src","JackSparrow.jpg"); 
+         }
+        if(data == "Spiderman")
+        {
+             document.getElementById("contectProfilePicture").setAttribute("src","Spiderman.jpg"); 
+        }
+        if(data == "Alice")
+        {
+             document.getElementById("contectProfilePicture").setAttribute("src","Alice.jpg"); 
+        }
+        if(data == "Bob")
+        {
+             document.getElementById("contectProfilePicture").setAttribute("src","Bob.jpg"); 
+        }
+
+    }
+    else
+    {
+        let dataName = data.cells[1].innerHTML;
+        if (dataName.includes("<br>")){
+            const name = dataName.split("<br>");
+            dataName = name[0];
+        }
+        
+         document.getElementById("chat_name").textContent= dataName;
+         document.getElementById("contectProfilePicture").setAttribute("src","profil.png");
+    }
+
+}
+
+
+
+// function text_massage() { 
+ 
+//     var table = document.getElementById("myTableData"); 
+  
+//     var rowCount = table.rows.length; 
+//     var row = table.insertRow(rowCount); 
+ 
+//     var currentTime = insertTimeMessage(); 
+ 
+//     row.insertCell(0).innerHTML= "hello how are you?"; 
+//     row.insertCell(1).innerHTML= "<small>"+currentTime+"</small>"; 
+ 
+//     //add the new message to the bank. 
+//     let name=document.getElementById("Omer Adam").innerHTML; 
+    
+//     user_message.get(name)[user_message.get(name).length] = new MessageData("hello how are you?",currentTime); 
+ 
+//     document.getElementById('message').value = ""; 
+ 
+//     insertColorsMessage(row); 
+// }
+
+function logout(){
+    window.location.href="index.html";
+}
 
